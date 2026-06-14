@@ -1,0 +1,43 @@
+---
+import Layout from '../templates/servicios/Layout.astro';
+import Nav from '../templates/servicios/Nav.astro';
+import Hero from '../templates/servicios/Hero.astro';
+import Services from '../templates/servicios/Services.astro';
+import About from '../templates/servicios/About.astro';
+import Stats from '../templates/servicios/Stats.astro';
+import Contact from '../templates/servicios/Contact.astro';
+import Footer from '../templates/servicios/Footer.astro';
+import { data } from '../templates/servicios/data';
+
+const title = `${data.brand.name} — ${data.brand.tagline}`;
+const description = data.hero.subtitle;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: data.brand.name,
+  description: data.footer.description,
+  telephone: data.contact.phone,
+  email: data.contact.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: data.contact.address,
+    addressLocality: 'Bogotá',
+    addressCountry: 'CO',
+  },
+  areaServed: 'CO',
+};
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+  <Nav data={data} />
+  <Hero data={data} />
+  <Services data={data} />
+  <About data={data} />
+  <Stats data={data} />
+  <Contact data={data} />
+  <Footer data={data} />
+</Layout>
