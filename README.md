@@ -20,10 +20,10 @@ Navegación, hero con tarjeta de diagnóstico, grilla de servicios, sección
 ## Desarrollo
 
 ```bash
-npm install
-npm run dev       # http://localhost:4321
-npm run build     # genera dist/
-npm run preview   # sirve el build
+bun install
+bun run dev       # http://localhost:4321
+bun run build     # genera dist/
+bun run preview   # sirve el build
 ```
 
 ## Personalización

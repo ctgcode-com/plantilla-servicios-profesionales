@@ -10,6 +10,25 @@ const { data } = Astro.props;
 const whatsappUrl = data.contact.whatsapp
   ? `https://wa.me/${data.contact.whatsapp.replace(/[^0-9]/g, '')}`
   : null;
+
+const form = data.contact.form || {
+  nameLabel: 'Nombre',
+  namePlaceholder: 'Tu nombre',
+  companyLabel: 'Empresa',
+  companyPlaceholder: 'Nombre de tu empresa',
+  emailLabel: 'Correo',
+  emailPlaceholder: 'correo@empresa.com',
+  messageLabel: '¿En qué podemos ayudarte?',
+  messagePlaceholder: 'Cuéntanos brevemente sobre tu empresa y tu necesidad…',
+  submitButton: 'Enviar mensaje',
+};
+
+const labels = data.contact.labels || {
+  phone: 'Teléfono',
+  email: 'Correo',
+  whatsapp: 'WhatsApp',
+  address: 'Dirección',
+};
 ---
 
 <section id="contacto" class="py-20 sm:py-28 bg-white">
@@ -17,7 +36,7 @@ const whatsappUrl = data.contact.whatsapp
     <div class="max-w-2xl mb-14 reveal">
       <p class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-blue-900">
         <span class="h-px w-8 bg-blue-900"></span>
-        Contacto
+        {data.contact.badge || 'Contacto'}
       </p>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 mb-4">
         {data.contact.title}
@@ -32,42 +51,42 @@ const whatsappUrl = data.contact.whatsapp
 
         <div class="grid sm:grid-cols-2 gap-5">
           <label class="block">
-            <span class="mb-1.5 block text-sm font-semibold text-slate-700">Nombre</span>
+            <span class="mb-1.5 block text-sm font-semibold text-slate-700">{form.nameLabel}</span>
             <input
               name="name"
               type="text"
               required
               class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900/20 transition"
-              placeholder="Tu nombre"
+              placeholder={form.namePlaceholder}
             />
           </label>
           <label class="block">
-            <span class="mb-1.5 block text-sm font-semibold text-slate-700">Empresa</span>
+            <span class="mb-1.5 block text-sm font-semibold text-slate-700">{form.companyLabel}</span>
             <input
               name="company"
               type="text"
               class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900/20 transition"
-              placeholder="Nombre de tu empresa"
+              placeholder={form.companyPlaceholder}
             />
           </label>
           <label class="block sm:col-span-2">
-            <span class="mb-1.5 block text-sm font-semibold text-slate-700">Correo</span>
+            <span class="mb-1.5 block text-sm font-semibold text-slate-700">{form.emailLabel}</span>
             <input
               name="email"
               type="email"
               required
               class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900/20 transition"
-              placeholder="correo@empresa.com"
+              placeholder={form.emailPlaceholder}
             />
           </label>
           <label class="block sm:col-span-2">
-            <span class="mb-1.5 block text-sm font-semibold text-slate-700">¿En qué podemos ayudarte?</span>
+            <span class="mb-1.5 block text-sm font-semibold text-slate-700">{form.messageLabel}</span>
             <textarea
               name="message"
               required
               rows="5"
               class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900/20 transition resize-y"
-              placeholder="Cuéntanos brevemente sobre tu empresa y tu necesidad…"
+              placeholder={form.messagePlaceholder}
             ></textarea>
           </label>
         </div>
@@ -76,7 +95,7 @@ const whatsappUrl = data.contact.whatsapp
           type="submit"
           class="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-900 px-7 py-3.5 text-base font-semibold text-white shadow-md hover:bg-blue-800 hover:shadow-lg transition-all"
         >
-          Enviar mensaje
+          {form.submitButton}
           <Icon name="send" class="w-4 h-4" />
         </button>
       </form>
@@ -88,7 +107,7 @@ const whatsappUrl = data.contact.whatsapp
             <Icon name="phone" class="w-5 h-5" />
           </div>
           <div class="min-w-0">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">Teléfono</p>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">{labels.phone}</p>
             <p class="text-base font-semibold text-slate-900">{data.contact.phone}</p>
           </div>
         </a>
@@ -98,7 +117,7 @@ const whatsappUrl = data.contact.whatsapp
             <Icon name="mail" class="w-5 h-5" />
           </div>
           <div class="min-w-0">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">Correo</p>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">{labels.email}</p>
             <p class="text-base font-semibold text-slate-900 truncate">{data.contact.email}</p>
           </div>
         </a>
@@ -109,7 +128,7 @@ const whatsappUrl = data.contact.whatsapp
               <Icon name="message-circle" class="w-5 h-5" />
             </div>
             <div class="min-w-0">
-              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">WhatsApp</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">{labels.whatsapp}</p>
               <p class="text-base font-semibold text-slate-900">{data.contact.whatsapp}</p>
             </div>
           </a>
@@ -120,7 +139,7 @@ const whatsappUrl = data.contact.whatsapp
             <Icon name="map-pin" class="w-5 h-5" />
           </div>
           <div class="min-w-0">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">Dirección</p>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">{labels.address}</p>
             <p class="text-sm font-semibold text-slate-900">{data.contact.address}</p>
             <p class="text-xs text-slate-500 mt-1">{data.contact.hours}</p>
           </div>
